@@ -1,0 +1,169 @@
+{
+  "name": "Student Intervention Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "student-intervention",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "student-intervention"
+    },
+    {
+      "parameters": {
+        "fromEmail": "mentor@alcovia.com",
+        "toEmail": "={{$json.student_email}}",
+        "subject": "🚨 Student Intervention Required - {{$json.student_name}}",
+        "text": "Hello Mentor,\n\nA student requires immediate attention:\n\n👤 Student: {{$json.student_name}}\n📧 Email: {{$json.student_email}}\n📊 Quiz Score: {{$json.quiz_score}}/10\n⏱️ Focus Time: {{$json.focus_minutes}} minutes\n🔄 Tab Switches: {{$json.tab_switches}}\n\nThis student has not met the performance threshold:\n- Required: Quiz Score > 7 AND Focus Time > 60 minutes\n- Student is now LOCKED and waiting for your intervention.\n\nPlease assign a remedial task by clicking the link below:\n\n👉 Assign Task: [Click to assign remedial task]\n\nIntervention ID: {{$json.intervention_id}}\nStudent ID: {{$json.student_id}}\nTimestamp: {{$json.timestamp}}\n\n---\nAlcovia Intervention Engine\nAuto-generated notification",
+        "options": {
+          "allowUnauthorizedCerts": false
+        }
+      },
+      "id": "send-email",
+      "name": "Send Email to Mentor",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {
+          "timeout": 43200
+        }
+      },
+      "id": "wait-for-webhook",
+      "name": "Wait for Mentor Response",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "webhookId": "mentor-response"
+    },
+    {
+      "parameters": {
+        "url": "={{$env.BACKEND_URL}}/api/assign-intervention",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "student_id",
+              "value": "={{$json.student_id}}"
+            },
+            {
+              "name": "remedial_task",
+              "value": "={{$json.remedial_task}}"
+            },
+            {
+              "name": "mentor_email",
+              "value": "={{$json.mentor_email}}"
+            },
+            {
+              "name": "intervention_id",
+              "value": "={{$json.intervention_id}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "call-backend",
+      "name": "Update Backend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true, \"message\": \"Intervention triggered\", \"student_id\": \"{{$json.student_id}}\"}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [450, 450]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@alcovia.com",
+        "toEmail": "={{$json.mentor_email}}",
+        "subject": "✅ Intervention Assigned - {{$json.student_name}}",
+        "text": "The remedial task has been successfully assigned to {{$json.student_name}}.\n\nTask: {{$json.remedial_task}}\n\nThe student's app has been unlocked and they can now see the task.\n\n---\nAlcovia Intervention Engine",
+        "options": {}
+      },
+      "id": "confirmation-email",
+      "name": "Send Confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Email to Mentor",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email to Mentor": {
+      "main": [
+        [
+          {
+            "node": "Wait for Mentor Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Mentor Response": {
+      "main": [
+        [
+          {
+            "node": "Update Backend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Backend": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-23T00:00:00.000Z",
+  "versionId": "1"
+}
+

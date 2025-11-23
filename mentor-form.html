@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcovia - Assign Remedial Task</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .alert {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            color: #92400e;
+        }
+        
+        .alert strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .help-text {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .required {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Assign Remedial Task</h1>
+        <p class="subtitle">Alcovia Intervention Engine - Mentor Portal</p>
+        
+        <div class="alert">
+            <strong>⚠️ Important:</strong>
+            Replace the form action URL below with your actual n8n Wait Webhook URL before deploying!
+        </div>
+        
+        <!-- 
+            IMPORTANT: Replace "YOUR_N8N_WAIT_WEBHOOK_URL" with your actual n8n webhook URL
+            You get this from the "Wait" node in your n8n workflow
+        -->
+        <form action="YOUR_N8N_WAIT_WEBHOOK_URL" method="POST">
+            <div class="form-group">
+                <label for="student_id">
+                    Student ID <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="student_id" 
+                    name="student_id" 
+                    value="123" 
+                    required
+                    placeholder="Enter student ID"
+                >
+                <div class="help-text">This should be provided in the email notification</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="intervention_id">
+                    Intervention ID <span class="required">*</span>
+                </label>
+                <input 
+                    type="number" 
+                    id="intervention_id" 
+                    name="intervention_id" 
+                    required
+                    placeholder="Enter intervention ID"
+                >
+                <div class="help-text">Found in the email notification</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="remedial_task">
+                    Remedial Task <span class="required">*</span>
+                </label>
+                <textarea 
+                    id="remedial_task" 
+                    name="remedial_task" 
+                    required
+                    placeholder="Describe the task the student needs to complete..."
+                >Read Chapter 4: Data Structures and complete all exercises. Pay special attention to understanding linked lists and binary trees. Watch the supplementary video lecture.</textarea>
+                <div class="help-text">Be specific and clear about what the student needs to do</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="mentor_email">
+                    Your Email <span class="required">*</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="mentor_email" 
+                    name="mentor_email" 
+                    value="mentor@alcovia.com" 
+                    required
+                    placeholder="mentor@example.com"
+                >
+                <div class="help-text">You'll receive a confirmation email</div>
+            </div>
+            
+            <button type="submit">
+                📤 Assign Task to Student
+            </button>
+        </form>
+        
+        <div class="footer">
+            <p>Once submitted, the student will instantly receive this task and be unlocked.</p>
+            <p style="margin-top: 10px;">Powered by Alcovia Intervention Engine</p>
+        </div>
+    </div>
+</body>
+</html>
+
