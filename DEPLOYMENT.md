@@ -1,16 +1,4 @@
-# 🚀 Deployment Guide - Step by Step
-
-This guide will help you deploy the entire Alcovia Intervention Engine in **under 30 minutes**.
-
-## 📋 Prerequisites
-
-Create free accounts on:
-- ✅ [GitHub](https://github.com) (for code hosting)
-- ✅ [Railway](https://railway.app) (for backend + PostgreSQL)
-- ✅ [Vercel](https://vercel.com) (for frontend)
-- ✅ [n8n Cloud](https://n8n.io/cloud) (for automation)
-
----
+# Deployment Guide - Step by Step
 
 ## Step 1: Push Code to GitHub
 
@@ -26,7 +14,7 @@ Create free accounts on:
 
 ### Option B: Using Terminal
 ```bash
-cd /Users/vandit/Documents/neha/alcovia
+cd /Users/neha/Documents/neha/alcovia
 
 # Initialize git
 git init
@@ -45,7 +33,7 @@ git push -u origin main
 
 ---
 
-## Step 2: Deploy Backend on Railway ⚡
+## Step 2: Deploy Backend on Railway 
 
 ### Why Railway?
 - Built-in PostgreSQL (no separate setup)
@@ -94,7 +82,7 @@ git push -u origin main
 
 ---
 
-## Step 3: Deploy Frontend on Vercel 🎨
+## Step 3: Deploy Frontend on Vercel
 
 ### Why Vercel?
 - Made for React/Vite apps
@@ -141,7 +129,7 @@ If you see connection errors:
 
 ---
 
-## Step 4: Setup n8n Workflow ⚙️
+## Step 4: Setup n8n Workflow 
 
 ### Why n8n Cloud?
 - No server hosting needed
@@ -194,7 +182,7 @@ If you see connection errors:
    Email template:
    ```
    To: mentor@alcovia.com (or your email)
-   Subject: 🚨 Student Intervention Required
+   Subject: Student Intervention Required
    Body:
    Student: {{$json.student_name}}
    Quiz Score: {{$json.quiz_score}}/10
@@ -233,7 +221,7 @@ If you see connection errors:
 
 ---
 
-## Step 5: Connect Everything 🔗
+## Step 5: Connect Everything
 
 ### Update Backend with n8n Webhook
 
@@ -296,7 +284,7 @@ Save this as `mentor-form.html` and:
 
 ---
 
-## Step 6: Test the Complete Flow 🧪
+## Step 6: Test the Complete Flow 
 
 ### Test Case: Failed Check-in → Intervention
 
@@ -313,10 +301,10 @@ Save this as `mentor-form.html` and:
    - Click "Submit Daily Check-in"
 
 3. **Expected Results:**
-   - ✅ App should show 🔒 LOCKED screen
-   - ✅ Message: "Waiting for mentor..."
-   - ✅ You should receive an email notification
-   - ✅ Check n8n dashboard - workflow should be running
+   - App should show LOCKED screen
+   - Message: "Waiting for mentor..."
+   - You should receive an email notification
+   - Check n8n dashboard - workflow should be running
 
 4. **Mentor Assigns Task:**
    - Open the mentor form HTML
@@ -328,43 +316,30 @@ Save this as `mentor-form.html` and:
    - Click "Assign Task"
 
 5. **Expected Results:**
-   - ✅ Student app should INSTANTLY unlock (WebSocket!)
-   - ✅ Should show 📚 Remedial Task screen
-   - ✅ Display your assigned task
-   - ✅ Show "Mark Complete" button
+   - Student app should INSTANTLY unlock (WebSocket!)
+   - Should show Remedial Task screen
+   - Display your assigned task
+   - Show "Mark Complete" button
 
 6. **Complete Task:**
    - Click "Mark Complete"
-   - ✅ Should return to ACTIVE state
-   - ✅ Can start new focus session
+   - Should return to ACTIVE state
+   - Can start new focus session
 
 ### Test Case: Successful Check-in
 
 1. Start timer, let it run 61+ minutes
 2. Enter quiz score **8 or higher**
 3. Submit
-4. ✅ Should show "On Track" status
-5. ✅ No intervention triggered
+4. Should show "On Track" status
+5. No intervention triggered
 
 ---
 
-## 📝 Update Your README
+## Update Your README
 
 After deployment, update `README.md` with your URLs:
 
-```markdown
-## 🎯 Live Demo
-
-- **Frontend**: https://your-app.vercel.app
-- **Backend API**: https://your-backend.up.railway.app
-- **GitHub**: https://github.com/yourusername/alcovia-intervention-engine
-```
-
----
-
-## 🎥 Record Loom Video
-
-Record a 5-minute walkthrough showing:
 
 1. **Intro** (15 sec)
    - "Hi, I'm [name], here's my Alcovia assignment"
@@ -400,7 +375,7 @@ Record a 5-minute walkthrough showing:
 
 ---
 
-## 🐛 Common Issues & Fixes
+## Common Issues & Fixes
 
 ### Backend Deployment Issues
 
@@ -451,34 +426,4 @@ curl -X POST https://your-n8n-url/webhook/student-intervention \
 
 ---
 
-## ✅ Pre-Submission Checklist
-
-Before submitting to Alcovia:
-
-- [ ] Backend deployed and health check returns OK
-- [ ] Frontend loads without errors
-- [ ] Can submit successful check-in (score 8+, time 60+)
-- [ ] Can submit failing check-in → app locks
-- [ ] n8n workflow triggers and sends email
-- [ ] Can assign remedial task → app unlocks instantly
-- [ ] Tab switching detection works
-- [ ] WebSocket real-time updates work
-- [ ] README.md updated with live URLs
-- [ ] Loom video recorded and uploaded
-- [ ] GitHub repo is public
-- [ ] Code is clean and commented
-
----
-
-## 🚀 You're Ready!
-
-Submit these URLs in the [Google Form](https://forms.gle/1Qq9bcR7KPE6ZAgUA):
-
-1. **Live App URL**: Your Vercel URL
-2. **GitHub Repo**: Your GitHub repository (public)
-3. **Loom Video**: Your walkthrough video
-
-**Estimated Total Time**: 20-30 minutes
-
-Good luck! 🎉
 
