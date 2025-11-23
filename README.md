@@ -4,7 +4,7 @@ A **closed-loop intervention system** that detects when students fall behind in 
 
 ## Live Demo
 
-- **Frontend**: [[Alcovia](https://alcovia-ten.vercel.app/)L]
+- **Frontend**: [[Alcovia](https://alcovia-ten.vercel.app/)]
 - **Loom Video**: [Your Video Link]
 
 ## Architecture Overview
